@@ -16,4 +16,13 @@ public:
 
 	void enter() override;
 	void exit() override;
+
+	const Vector2& getRotateDir() const { return rotateDir; }
+	const Vector2& getMoveDir() const { return moveDir; }
+	bool getDrawLine() const { return drawLine; }
+
+private:
+	Vector2 rotateDir{ 0.0f, 0.0f };
+	Vector2 moveDir{ 0.0f, 0.0f };
+	bool drawLine{ false };
 };

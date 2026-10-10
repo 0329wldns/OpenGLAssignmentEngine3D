@@ -19,12 +19,17 @@ enum class KEY
 	W, A, S, D,
 	I, J, K, L,
 
+	UP, DOWN, LEFT, RIGHT,
+
 	P, E, T, C,
-	Q,
-	R,
+	X, Y,
+	Q, R,
+
 	MINUS, EQUAL,
+
 	ENTER,
 	LEFT_SHIFT,
+
 	MOUSE_L, MOUSE_R,
 	ESC,
 	LAST

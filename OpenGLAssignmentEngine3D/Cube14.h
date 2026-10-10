@@ -13,4 +13,8 @@ public:
 
 private:
 	void randomizeColor();
+
+private:
+	Vector2 rotateDegree{0.0f, 0.0f};
+	Vector2 rotateDir{ 0.0f, 0.0f };
 };

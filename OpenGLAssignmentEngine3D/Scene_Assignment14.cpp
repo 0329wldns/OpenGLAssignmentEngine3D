@@ -6,9 +6,44 @@
 
 void Scene_Assignment14::processKeyInput()
 {
+	if (KeyManager::getInstance().getKeyState(KEY::X) == KEY_STATE::TAP)
+	{
+		if (KeyManager::getInstance().getKeyState(KEY::LEFT_SHIFT) == KEY_STATE::HOLD) rotateDir.x = -1.0f;
+		else rotateDir.x = 1.0f;
+	}
+	if (KeyManager::getInstance().getKeyState(KEY::Y) == KEY_STATE::TAP)
+	{
+		if (KeyManager::getInstance().getKeyState(KEY::LEFT_SHIFT) == KEY_STATE::HOLD) rotateDir.y = -1.0f;
+		else rotateDir.y = 1.0f;
+	}
+	if (KeyManager::getInstance().getKeyState(KEY::W) == KEY_STATE::TAP)
+	{
+		if (KeyManager::getInstance().getKeyState(KEY::LEFT_SHIFT) == KEY_STATE::HOLD) drawLine = false;
+		else drawLine = true;
+	}
+
+	if (KeyManager::getInstance().getKeyState(KEY::UP) == KEY_STATE::TAP) moveDir.y += 1.0f;
+	else if (KeyManager::getInstance().getKeyState(KEY::UP) == KEY_STATE::AWAY) moveDir.y -= 1.0f;
+	if (KeyManager::getInstance().getKeyState(KEY::DOWN) == KEY_STATE::TAP) moveDir.y -= 1.0f;
+	else if (KeyManager::getInstance().getKeyState(KEY::DOWN) == KEY_STATE::AWAY) moveDir.y += 1.0f;
+	if (KeyManager::getInstance().getKeyState(KEY::LEFT) == KEY_STATE::TAP) moveDir.x -= 1.0f;
+	else if (KeyManager::getInstance().getKeyState(KEY::LEFT) == KEY_STATE::AWAY) moveDir.x += 1.0f;
+	if (KeyManager::getInstance().getKeyState(KEY::RIGHT) == KEY_STATE::TAP) moveDir.x += 1.0f;
+	else if (KeyManager::getInstance().getKeyState(KEY::RIGHT) == KEY_STATE::AWAY) moveDir.x -= 1.0f;
+
+
+	if (KeyManager::getInstance().getKeyState(KEY::S) == KEY_STATE::TAP)
+	{
+		rotateDir.x = 0.0f;
+		rotateDir.y = 0.0f;
+	}
+
 	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP)
 	{
 		changeScene(SCENE_TYPE::START);;
+		rotateDir.x = 0.0f;
+		rotateDir.y = 0.0f;
+		drawLine = false;
 	}
 }
 
