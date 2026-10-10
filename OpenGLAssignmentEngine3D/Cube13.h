@@ -11,7 +11,12 @@ public:
 	void update() override;
 	void render() const override;
 
+	static inline void setInvisibleAllFace()
+	{
+		for (int i = 0; i < 6; ++i)
+			face[i].isVisible = false;
+	}
+
 private:
-	// 각 면별 색상 앞뒤좌우상하 순
-	Color color[6];
+	inline static faceData face[6];	// 앞뒤좌우상하 순
 };

@@ -80,6 +80,7 @@ void MeshManager::init()
 	glBindVertexArray(0);
 
 	loadOBJ("cube", "cube.obj");
+	loadOBJ("pyramid", "pyramid.obj");
 }
 
 bool MeshManager::loadOBJ(const std::string& name, const std::string& filePath)

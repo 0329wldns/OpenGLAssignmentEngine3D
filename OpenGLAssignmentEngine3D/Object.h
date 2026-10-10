@@ -1,8 +1,13 @@
 ﻿#pragma once
 #include "pch.h"
 #include "Struct.h"
-
 #include "collider.h"
+
+struct faceData
+{
+	Color color;
+	bool isVisible{ false };
+};
 
 class Collider;
 

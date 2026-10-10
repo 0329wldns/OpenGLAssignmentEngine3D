@@ -84,6 +84,15 @@
     <ClCompile Include="UIButton.cpp">
       <Filter>소스 파일\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Cube13.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Assignment13.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Pyramid13.cpp">
+      <Filter>소스 파일\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Struct.h">
@@ -140,6 +149,15 @@
     <ClInclude Include="Scene.h">
       <Filter>헤더 파일\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Assignment13.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube13.h">
+      <Filter>헤더 파일\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Pyramid13.h">
+      <Filter>헤더 파일\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -148,6 +166,7 @@
     <None Include="default.frag">
       <Filter>헤더 파일</Filter>
     </None>
+    <None Include="pyramid.obj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cube.obj" />
