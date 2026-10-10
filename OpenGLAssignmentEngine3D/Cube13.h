@@ -12,5 +12,6 @@ public:
 	void render() const override;
 
 private:
-	Color color;
+	// 각 면별 색상 앞뒤좌우상하 순
+	Color color[6];
 };

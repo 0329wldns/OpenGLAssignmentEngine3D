@@ -79,7 +79,6 @@ void MeshManager::init()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	// 육면체 obj파일 로드
 	loadOBJ("cube", "cube.obj");
 }
 
@@ -191,7 +190,6 @@ void MeshManager::drawMesh(const std::string& name, bool drawLine) const
 		glDrawArrays(GL_TRIANGLES, 0, mesh.vertexCount);
 	}
 	glBindVertexArray(0);
-
 }
 
 void MeshManager::drawQuad(bool drawLine) const

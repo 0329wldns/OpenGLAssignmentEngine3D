@@ -23,11 +23,18 @@ public:
 	bool loadOBJ(const std::string& name, const std::string& filePath);
 
 	// 이름으로 등록된 OBJ 메쉬 그리기
-	void drawMesh(const std::string& name, bool drawLine = false) const;
+	void drawMesh(const string& name, bool drawLine = false) const;
 
 	void drawQuad(bool drawLine = false) const;
 	void drawTriangle(bool drawLine = false) const;
 	void drawLine() const;
+
+	MeshData getMeshData(const std::string& name) const
+	{
+		auto iter{ meshMap.find(name) };
+		if (iter == meshMap.end()) return MeshData{};
+		return iter->second;
+	}
 
 private:
 	MeshManager() = default;

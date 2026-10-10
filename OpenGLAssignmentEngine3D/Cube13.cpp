@@ -8,7 +8,7 @@ Cube13::Cube13()
 {
 	setPos(0.0f, 0.0f, 0.0f);
 	setScale(0.3f, 0.3f, 0.3f);
-	color = Color(realDist(gen), realDist(gen), realDist(gen));
+	for (int i = 0; i < 6; ++i) color[i] = Color{ realDist(gen), realDist(gen), realDist(gen) };
 }
 
 void Cube13::update()
@@ -29,8 +29,15 @@ void Cube13::render() const
 	model = glm::scale(model, myScale * 2.0f);
 
 	ShaderManager::getInstance().setMat4("default", "model", model);
-	ShaderManager::getInstance().setVec3("default", "color", color);
 	ShaderManager::getInstance().setFloat("default", "transparency", 1.0f);
 
-	MeshManager::getInstance().drawMesh("cube", false);
+	MeshData cubeMesh{ MeshManager::getInstance().getMeshData("cube") };
+
+	for (int i = 0; i < 6; ++i)
+	{
+		glBindVertexArray(cubeMesh.VAO);
+		ShaderManager::getInstance().setVec3("default", "color", color[i]);
+		glDrawArrays(GL_TRIANGLES, i * 6, 6);
+		glBindVertexArray(0);
+	}
 }
