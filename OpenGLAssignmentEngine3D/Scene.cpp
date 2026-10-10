@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "KeyManager.h"
 #include "Core.h"
+#include "MeshManager.h"
+#include "ShaderManager.h"
 
 void Scene::update()
 {
@@ -54,6 +56,43 @@ void Scene::render()
 	drawUI();
 
 	drawClear();
+}
+
+void Scene::drawAxis() const
+{
+	ShaderManager::getInstance().useProgram("default");
+
+	// X축
+	glm::mat4 model{ 1.0f };
+	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, Vector3(2.0f));
+	ShaderManager::getInstance().setMat4("default", "model", model);
+	ShaderManager::getInstance().setVec3("default", "color", COLOR_RED);
+	ShaderManager::getInstance().setFloat("default", "transparency", 1.0f);
+
+	MeshManager::getInstance().drawLine();
+
+	// Y축
+	model = glm::mat4(1.0f);
+	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::scale(model, Vector3(2.0f));
+	ShaderManager::getInstance().setMat4("default", "model", model);
+	ShaderManager::getInstance().setVec3("default", "color", COLOR_GREEN);
+
+	MeshManager::getInstance().drawLine();
+
+	// Z축
+	model = glm::mat4(1.0f);
+	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, Vector3(2.0f));
+	ShaderManager::getInstance().setMat4("default", "model", model);
+	ShaderManager::getInstance().setVec3("default", "color", COLOR_BLUE);
+
+	MeshManager::getInstance().drawLine();
 }
 
 void Scene::reset()

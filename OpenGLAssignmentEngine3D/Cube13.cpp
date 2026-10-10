@@ -21,16 +21,6 @@ void Cube13::update()
 			face[i].isVisible = !face[i].isVisible;
 	}
 
-	if (KeyManager::getInstance().getKeyState(KEY::R) == KEY_STATE::TAP)
-	{
-		for (int i = 0; i < 6; ++i)
-		{
-			face[i].color = Color{ realDist(gen), realDist(gen), realDist(gen) };
-			face[i].isVisible = false;
-		}
-			
-	}
-
 	if (KeyManager::getInstance().getKeyState(KEY::C) == KEY_STATE::TAP)
 	{
 		for (int i = 0; i < 6; ++i)

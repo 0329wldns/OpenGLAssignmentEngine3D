@@ -8,8 +8,6 @@ struct MeshData
 	uint32_t VBO{};
 	uint32_t EBO{};
 	uint32_t vertexCount{};
-	uint32_t indexCount{};
-	bool useIndices{ false };
 };
 
 class MeshManager : public Singleton<MeshManager>
@@ -20,10 +18,14 @@ public:
 	void init();
 
 	// OBJ 파일 로드 및 메쉬 등록
-	bool loadOBJ(const std::string& name, const std::string& filePath);
+	bool loadOBJ(const std::string& name, const std::string& filePath, const glm::vec3& defaultColor = glm::vec3(1.0f, 1.0f, 1.0f));
 
 	// 이름으로 등록된 OBJ 메쉬 그리기
-	void drawMesh(const string& name, bool drawLine = false) const;
+	void drawMesh(const std::string& name, bool drawLine = false) const;
+
+	// 등록된 OBJ 메쉬의 색상 업데이트
+	void updateMeshColors(const std::string& name, const std::vector<glm::vec3>& colors);
+	void resetMeshColors(const std::string& name);
 
 	void drawQuad(bool drawLine = false) const;
 	void drawTriangle(bool drawLine = false) const;

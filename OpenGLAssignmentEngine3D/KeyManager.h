@@ -24,6 +24,7 @@ enum class KEY
 	R,
 	MINUS, EQUAL,
 	ENTER,
+	LEFT_SHIFT,
 	MOUSE_L, MOUSE_R,
 	ESC,
 	LAST

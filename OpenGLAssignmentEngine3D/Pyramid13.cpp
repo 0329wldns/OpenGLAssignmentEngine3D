@@ -22,16 +22,6 @@ void Pyramid13::update()
 		}
 	}
 
-	if (KeyManager::getInstance().getKeyState(KEY::R) == KEY_STATE::TAP)
-	{
-		for (int i = 0; i < 4; ++i)
-		{
-			face[i + 1].color = Color{ realDist(gen), realDist(gen), realDist(gen) };
-			face[i + 1].isVisible = false;
-		}
-
-	}
-
 	if (KeyManager::getInstance().getKeyState(KEY::T) == KEY_STATE::TAP)
 	{
 		for (int i = 0; i < 4; ++i)

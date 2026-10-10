@@ -12,7 +12,7 @@ UIButton::UIButton()
 	, degree(30.0f)
 {
 	setScale(width, height, 0.08f);
-	setColor(0.5f, 0.5f, 0.5f);
+	setColor(COLOR_GRAY);
 }
 
 void UIButton::update()

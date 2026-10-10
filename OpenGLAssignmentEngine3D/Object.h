@@ -3,9 +3,9 @@
 #include "Struct.h"
 #include "collider.h"
 
-struct faceData
+struct FaceData
 {
-	Color color;
+	Color color{};
 	bool isVisible{ false };
 };
 

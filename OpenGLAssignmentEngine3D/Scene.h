@@ -18,6 +18,8 @@ public:
 	virtual void drawUI() const = 0;
 	virtual void drawClear() const {};
 
+	void drawAxis() const;
+
 	virtual void enter() = 0;	// 씬 진입
 	virtual void exit() = 0;	// 씬 탈출
 

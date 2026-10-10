@@ -18,5 +18,5 @@ public:
 	}
 
 private:
-	inline static faceData face[6];	// 앞뒤좌우상하 순
+	inline static FaceData face[6];	// 앞뒤좌우상하 순
 };
