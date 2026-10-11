@@ -9,7 +9,6 @@ Cube15::Cube15()
 {
 	setPos(0.0f, 0.0f, 0.0f);
 	setScale(0.3f, 0.3f, 0.3f);
-	// randomizeColor();
 	faceData[0].color = COLOR_RED;
 	faceData[1].color = COLOR_YELLOW;
 	faceData[2].color = COLOR_GREEN;
@@ -25,22 +24,32 @@ Cube15::~Cube15()
 
 void Cube15::update()
 {
-	const KeyManager& keyManager{ KeyManager::getInstance() };
+	processKeyInput();
 	const float dt{ TimeManager::getInstance().getDeltaTime() };
 
-	if (keyManager.getKeyState(KEY::T) == KEY_STATE::HOLD)
+	if (keyState[0])
 	{
-		faceData[4].rotateDegree.z += 90.0f * dt;
+		for (int i = 0; i < 6; ++i) faceData[i].revolveDegree.y += 90.0f * dt;
+	}
+	if (keyState[1]) faceData[4].rotateDegree.z += 90.0f * dt;
+	if (keyState[2]) faceData[0].rotateDegree.x -= 90.0f * dt;
+	else faceData[0].rotateDegree.x += 90.0f * dt;
+	if (keyState[3])
+	{
+		for (int i = 2; i < 4; ++i) faceData[i].rotateDegree.x += 90.0f * dt;
 	}
 
-	if (keyManager.getKeyState(KEY::NUM4) == KEY_STATE::HOLD)
+	if (keyState[7])
 	{
 		for (int i = 0; i < 4; ++i) faceData[i].revolveDegree.y += 90.0f * dt;
 	}
-	if (keyManager.getKeyState(KEY::NUM5) == KEY_STATE::HOLD)
+	if (keyState[8])
 	{
 		for (int i = 4; i < 6; ++i) faceData[i].revolveDegree.x += 90.0f * dt;
 	}
+
+	if (faceData[0].rotateDegree.x <= -180.0f) faceData[0].rotateDegree.x = -180.0f;
+	else if (faceData[0].rotateDegree.x >= 0.0f) faceData[0].rotateDegree.x = 0.0f;
 }
 
 void Cube15::render() const
@@ -67,9 +76,17 @@ void Cube15::render() const
 		defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].revolveDegree.x), Vector3(1.0f, 0.0f, 0.0f));
 
 		// 자전
-		defaultModel = glm::translate(defaultModel, Vector3(0.0f, myScale.z, 0.0f));
+		defaultModel = glm::translate(defaultModel, Vector3(0.0f, myScale.y, 0.0f));
 		defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].rotateDegree.z), Vector3(0.0f, 0.0f, 1.0f));
-		defaultModel = glm::translate(defaultModel, Vector3(0.0f, -myScale.z, 0.0f));
+		defaultModel = glm::translate(defaultModel, Vector3(0.0f, -myScale.y, 0.0f));
+
+		if (i == 0)
+		{
+			defaultModel = glm::translate(defaultModel, Vector3(0.0f, myScale.y, myScale.z));
+			defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].rotateDegree.x), Vector3(1.0f, 0.0f, 0.0f));
+			defaultModel = glm::translate(defaultModel, Vector3(0.0f, -myScale.y, -myScale.z));
+		}
+		else defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].rotateDegree.x), Vector3(1.0f, 0.0f, 0.0f));
 		
 		defaultModel = glm::scale(defaultModel, myScale * 2.0f);
 		ShaderManager::getInstance().setMat4("default", "model", defaultModel);
@@ -90,4 +107,30 @@ void Cube15::randomizeColor()
 		randomColors.push_back(color);
 	}
 	MeshManager::getInstance().updateMeshColors("cube", randomColors);
+}
+
+void Cube15::processKeyInput()
+{
+	const KeyManager& keyManager{ KeyManager::getInstance() };
+
+	if (keyManager.getKeyState(KEY::Y) == KEY_STATE::TAP) keyState[0] = !keyState[0];
+	if (keyManager.getKeyState(KEY::T) == KEY_STATE::TAP) keyState[1] = !keyState[1];
+	if (keyManager.getKeyState(KEY::F) == KEY_STATE::TAP) keyState[2] = !keyState[2];
+	if (keyManager.getKeyState(KEY::S) == KEY_STATE::TAP) keyState[3] = !keyState[3];
+	if (keyManager.getKeyState(KEY::B) == KEY_STATE::TAP) keyState[4] = !keyState[4];
+	if (keyManager.getKeyState(KEY::NUM1) == KEY_STATE::TAP) keyState[5] = !keyState[5];
+	if (keyManager.getKeyState(KEY::NUM2) == KEY_STATE::TAP) keyState[6] = !keyState[6];
+	if (keyManager.getKeyState(KEY::NUM4) == KEY_STATE::TAP) keyState[7] = !keyState[7];
+	if (keyManager.getKeyState(KEY::NUM5) == KEY_STATE::TAP) keyState[8] = !keyState[8];
+
+	if (keyManager.getKeyState(KEY::R) == KEY_STATE::TAP)
+	{
+		for (int i = 0; i < 9; ++i) keyState[i] = false;
+
+		for (int i = 0; i < 6; ++i)
+		{
+			faceData[i].revolveDegree = Vector3(0.0f, 0.0f, 0.0f);
+			faceData[i].rotateDegree = Vector3(0.0f, 0.0f, 0.0f);
+		}
+	}
 }

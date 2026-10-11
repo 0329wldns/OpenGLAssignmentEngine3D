@@ -12,7 +12,9 @@ public:
 
 private:
 	void randomizeColor();
+	void processKeyInput();
 
 private:
 	FaceData faceData[6];	// 앞뒤좌우상하 순
+	bool keyState[9]{ false };	// y, t, f, s, b, 1, 2, 4, 5
 };

@@ -89,7 +89,6 @@ void MeshManager::init()
 	loadOBJ("pyramid", "res/pyramid.obj", glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
-// MeshManager.cpp
 bool MeshManager::loadOBJ(const std::string& name, const std::string& filePath, const glm::vec3& defaultColor)
 {
 	if (meshMap.find(name) != meshMap.end()) return true;
