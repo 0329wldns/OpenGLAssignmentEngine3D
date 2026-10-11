@@ -85,8 +85,8 @@ void MeshManager::init()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	loadOBJ("cube", "cube.obj", glm::vec3(1.0f, 1.0f, 1.0f));
-	loadOBJ("pyramid", "pyramid.obj", glm::vec3(1.0f, 1.0f, 1.0f));
+	loadOBJ("cube", "res/cube.obj", glm::vec3(1.0f, 1.0f, 1.0f));
+	loadOBJ("pyramid", "res/pyramid.obj", glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 // MeshManager.cpp
