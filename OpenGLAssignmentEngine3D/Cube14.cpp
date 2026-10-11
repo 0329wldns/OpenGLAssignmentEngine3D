@@ -52,6 +52,7 @@ void Cube14::update()
 
 void Cube14::render() const
 {
+	if (static_cast<Scene_Assignment14*>(SceneManager::getInstance().getCurScene())->getDrawMode()) return;
 	bool drawLine{ static_cast<Scene_Assignment14*>(SceneManager::getInstance().getCurScene())->getDrawLine() };
 	ShaderManager::getInstance().useProgram("default");
 
@@ -75,7 +76,7 @@ void Cube14::render() const
 void Cube14::randomizeColor()
 {
 	std::vector<glm::vec3> randomColors;
-	randomColors.reserve(36);	// reserve - 용량을 늘려둬서 push_back 시 재할당이 발생하지 않음
+	randomColors.reserve(36);	// reserve - 용량을 늘려둬서 push_back시 재할당이 발생하지 않음
 	
 	for (int i = 0; i < 36; ++i)
 	{

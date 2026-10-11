@@ -3,9 +3,29 @@
 #include "KeyManager.h"
 #include "EventFunc.h"
 #include "Cube14.h"
+#include "Pyramid14.h"
 
 void Scene_Assignment14::processKeyInput()
 {
+	if (KeyManager::getInstance().getKeyState(KEY::C) == KEY_STATE::TAP)
+	{
+		drawMode = false;
+	}
+	if (KeyManager::getInstance().getKeyState(KEY::P) == KEY_STATE::TAP)
+	{
+		drawMode = true;
+	}
+	if (KeyManager::getInstance().getKeyState(KEY::H) == KEY_STATE::TAP)
+	{
+		if (hFlag) glDisable(GL_DEPTH_TEST);
+		else glEnable(GL_DEPTH_TEST);
+		hFlag = !hFlag;
+	}
+	if (KeyManager::getInstance().getKeyState(KEY::W) == KEY_STATE::TAP)
+	{
+		if (KeyManager::getInstance().getKeyState(KEY::LEFT_SHIFT) == KEY_STATE::HOLD) drawLine = false;
+		else drawLine = true;
+	}
 	if (KeyManager::getInstance().getKeyState(KEY::X) == KEY_STATE::TAP)
 	{
 		if (KeyManager::getInstance().getKeyState(KEY::LEFT_SHIFT) == KEY_STATE::HOLD) rotateDir.x = -1.0f;
@@ -16,11 +36,6 @@ void Scene_Assignment14::processKeyInput()
 		if (KeyManager::getInstance().getKeyState(KEY::LEFT_SHIFT) == KEY_STATE::HOLD) rotateDir.y = -1.0f;
 		else rotateDir.y = 1.0f;
 	}
-	if (KeyManager::getInstance().getKeyState(KEY::W) == KEY_STATE::TAP)
-	{
-		if (KeyManager::getInstance().getKeyState(KEY::LEFT_SHIFT) == KEY_STATE::HOLD) drawLine = false;
-		else drawLine = true;
-	}
 
 	if (KeyManager::getInstance().getKeyState(KEY::UP) == KEY_STATE::TAP) moveDir.y += 1.0f;
 	else if (KeyManager::getInstance().getKeyState(KEY::UP) == KEY_STATE::AWAY) moveDir.y -= 1.0f;
@@ -30,7 +45,6 @@ void Scene_Assignment14::processKeyInput()
 	else if (KeyManager::getInstance().getKeyState(KEY::LEFT) == KEY_STATE::AWAY) moveDir.x += 1.0f;
 	if (KeyManager::getInstance().getKeyState(KEY::RIGHT) == KEY_STATE::TAP) moveDir.x += 1.0f;
 	else if (KeyManager::getInstance().getKeyState(KEY::RIGHT) == KEY_STATE::AWAY) moveDir.x -= 1.0f;
-
 
 	if (KeyManager::getInstance().getKeyState(KEY::S) == KEY_STATE::TAP)
 	{
@@ -44,6 +58,7 @@ void Scene_Assignment14::processKeyInput()
 		rotateDir.x = 0.0f;
 		rotateDir.y = 0.0f;
 		drawLine = false;
+		drawMode = false;
 	}
 }
 
@@ -59,8 +74,10 @@ void Scene_Assignment14::drawBG() const
 
 void Scene_Assignment14::enter()
 {
-	Cube14* cube{ new Cube14{} };
+	Cube14* cube{ new Cube14 };
 	createObject(cube, OBJECT_GROUP::DEFAULT);
+	Pyramid14* pyramid{ new Pyramid14 };
+	createObject(pyramid, OBJECT_GROUP::DEFAULT);
 }
 
 void Scene_Assignment14::exit()

@@ -21,9 +21,9 @@ enum class KEY
 
 	UP, DOWN, LEFT, RIGHT,
 
-	P, E, T, C,
-	X, Y,
-	Q, R,
+	Q, E, R, T, Y, U, O, P,
+	F, G, H,
+	Z, X, C, V, B, N, M,
 
 	MINUS, EQUAL,
 
