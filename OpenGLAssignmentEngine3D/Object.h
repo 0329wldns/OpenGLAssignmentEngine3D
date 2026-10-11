@@ -7,6 +7,9 @@ struct FaceData
 {
 	Color color{};
 	bool isVisible{ false };
+
+	Vector3 rotateDegree{};
+	Vector3 revolveDegree{};
 };
 
 class Collider;

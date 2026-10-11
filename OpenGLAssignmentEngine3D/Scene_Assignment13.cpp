@@ -27,12 +27,9 @@ void Scene_Assignment13::processKeyInput()
 	{
 		Cube13::setInvisibleAllFace();
 	}
-	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP)
-		changeScene(SCENE_TYPE::START);
-	if (KeyManager::getInstance().getKeyState(KEY::MINUS) == KEY_STATE::TAP)
-		glDisable(GL_CULL_FACE);
-	if (KeyManager::getInstance().getKeyState(KEY::EQUAL) == KEY_STATE::TAP)
-		glEnable(GL_CULL_FACE);
+	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP) changeScene(SCENE_TYPE::START);
+	if (KeyManager::getInstance().getKeyState(KEY::MINUS) == KEY_STATE::TAP) glDisable(GL_CULL_FACE);
+	if (KeyManager::getInstance().getKeyState(KEY::EQUAL) == KEY_STATE::TAP) glEnable(GL_CULL_FACE);
 }
 
 void Scene_Assignment13::update()
@@ -59,4 +56,5 @@ void Scene_Assignment13::exit()
 	reset();
 	Cube13::setInvisibleAllFace();
 	Pyramid13::setInvisibleAllFace();
+	glDisable(GL_CULL_FACE);
 }

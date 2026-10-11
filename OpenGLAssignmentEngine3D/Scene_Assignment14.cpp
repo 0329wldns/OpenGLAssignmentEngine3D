@@ -52,14 +52,7 @@ void Scene_Assignment14::processKeyInput()
 		rotateDir.y = 0.0f;
 	}
 
-	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP)
-	{
-		changeScene(SCENE_TYPE::START);;
-		rotateDir.x = 0.0f;
-		rotateDir.y = 0.0f;
-		drawLine = false;
-		drawMode = false;
-	}
+	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP) changeScene(SCENE_TYPE::START);
 }
 
 void Scene_Assignment14::update()
@@ -75,12 +68,16 @@ void Scene_Assignment14::drawBG() const
 void Scene_Assignment14::enter()
 {
 	Cube14* cube{ new Cube14 };
-	createObject(cube, OBJECT_GROUP::DEFAULT);
+	createObject(cube, OBJECT_GROUP::POLYHENDRON);
 	Pyramid14* pyramid{ new Pyramid14 };
-	createObject(pyramid, OBJECT_GROUP::DEFAULT);
+	createObject(pyramid, OBJECT_GROUP::POLYHENDRON);
 }
 
 void Scene_Assignment14::exit()
 {
 	reset();
+	rotateDir.x = 0.0f;
+	rotateDir.y = 0.0f;
+	drawLine = false;
+	drawMode = false;
 }
