@@ -3,13 +3,25 @@
 #include "Struct.h"
 #include "collider.h"
 
+struct RotateData
+{
+	float degree{};
+	float targetDegree{ 360.0f };	// 이거에 도달했을 때 roop검사
+	bool isRoop{ true };	// 기본적으로 반복회전
+	float speed{ 90.0f };
+	Vector3 offset{};
+	Vector3 axis{};
+	int rotateType{};	// 0 - 공전, 1 - 기타, 2 - 자전
+	bool isActive{ true };
+};
+
 struct FaceData
 {
 	Color color{};
 	bool isVisible{ false };
 
-	Vector3 rotateDegree{};
-	Vector3 revolveDegree{};
+	Vector3 scale{};
+	vector<RotateData> rotateData;
 };
 
 class Collider;

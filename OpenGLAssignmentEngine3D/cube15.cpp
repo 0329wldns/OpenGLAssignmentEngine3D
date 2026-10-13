@@ -15,6 +15,8 @@ Cube15::Cube15()
 	faceData[3].color = COLOR_BLUE;
 	faceData[4].color = COLOR_GREEN + COLOR_BLUE;
 	faceData[5].color = COLOR_RED + COLOR_BLUE;
+
+	for (int i = 0; i < 6; ++i) faceData[i].scale = Vector3(0.3f, 0.3f, 0.3f);
 }
 
 Cube15::~Cube15()
@@ -27,29 +29,44 @@ void Cube15::update()
 	processKeyInput();
 	const float dt{ TimeManager::getInstance().getDeltaTime() };
 
-	if (keyState[0])
+	for (int i = 0; i < 6; ++i)
 	{
-		for (int i = 0; i < 6; ++i) faceData[i].revolveDegree.y += 90.0f * dt;
-	}
-	if (keyState[1]) faceData[4].rotateDegree.z += 90.0f * dt;
-	if (keyState[2]) faceData[0].rotateDegree.x -= 90.0f * dt;
-	else faceData[0].rotateDegree.x += 90.0f * dt;
-	if (keyState[3])
-	{
-		for (int i = 2; i < 4; ++i) faceData[i].rotateDegree.x += 90.0f * dt;
+		vector<RotateData>& myRotateData{ faceData[i].rotateData };
+		for (int j = 0; j < myRotateData.size(); ++j)
+		{
+			RotateData& data{ myRotateData[j] };
+			if (!data.isActive) continue;
+			bool isRoop{ data.isRoop };
+			float& degree{ data.degree };
+			float targetDegree{ data.targetDegree };
+			float speed{ data.speed };
+
+			if (targetDegree >= 0)
+			{
+				degree += speed * dt;
+				if (degree > targetDegree)
+				{
+					if (isRoop) degree -= targetDegree;
+					else degree = targetDegree;
+				}
+			}
+			else 
+			{
+				degree -= speed * dt;
+				if (degree < targetDegree)
+				{
+					if (isRoop) degree += targetDegree;
+					else degree = targetDegree;
+				}
+			}
+			
+		}
 	}
 
-	if (keyState[7])
-	{
-		for (int i = 0; i < 4; ++i) faceData[i].revolveDegree.y += 90.0f * dt;
-	}
-	if (keyState[8])
-	{
-		for (int i = 4; i < 6; ++i) faceData[i].revolveDegree.x += 90.0f * dt;
-	}
-
-	if (faceData[0].rotateDegree.x <= -180.0f) faceData[0].rotateDegree.x = -180.0f;
-	else if (faceData[0].rotateDegree.x >= 0.0f) faceData[0].rotateDegree.x = 0.0f;
+	bool isLessThanZero{ glm::any(glm::lessThanEqual(faceData[1].scale, Vector3(0.0f, 0.0f, 0.0f))) };
+	bool isGreaterThanOrg{ glm::all(glm::greaterThanEqual(faceData[1].scale, getScale())) };
+	if (isLessThanZero) faceData[1].scale = Vector3(0.0f, 0.0f, 0.3f);
+	else if (isGreaterThanOrg) faceData[1].scale = getScale();
 }
 
 void Cube15::render() const
@@ -57,39 +74,32 @@ void Cube15::render() const
 	ShaderManager::getInstance().useProgram("default");
 
 	Vector3 myPos{ getPos() };
-	Vector3 myScale{ getScale() };
 
-	glm::mat4 model{ 1.0f };
-	model = glm::translate(model, myPos);
-	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 defaultModel{ 1.0f };
+	defaultModel = glm::translate(defaultModel, myPos);
+	defaultModel = glm::rotate(defaultModel, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	defaultModel = glm::rotate(defaultModel, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	ShaderManager::getInstance().setFloat("default", "transparency", 1.0f);
 
 	MeshData cubeMesh{ MeshManager::getInstance().getMeshData("cube") };
 	glBindVertexArray(cubeMesh.VAO);
 	for (int i = 0; i < 6; ++i)
 	{
-		glm::mat4 defaultModel{ model };
+		glm::mat4 model{ defaultModel };
+		Vector3 myScale{ faceData[i].scale };
 
-		// 공전
-		defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].revolveDegree.y), Vector3(0.0f, 1.0f, 0.0f));
-		defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].revolveDegree.x), Vector3(1.0f, 0.0f, 0.0f));
-
-		// 자전
-		defaultModel = glm::translate(defaultModel, Vector3(0.0f, myScale.y, 0.0f));
-		defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].rotateDegree.z), Vector3(0.0f, 0.0f, 1.0f));
-		defaultModel = glm::translate(defaultModel, Vector3(0.0f, -myScale.y, 0.0f));
-
-		if (i == 0)
+		const vector<RotateData>& myRotateData{ faceData[i].rotateData };
+		for (size_t j = 0; j < myRotateData.size(); ++j)
 		{
-			defaultModel = glm::translate(defaultModel, Vector3(0.0f, myScale.y, myScale.z));
-			defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].rotateDegree.x), Vector3(1.0f, 0.0f, 0.0f));
-			defaultModel = glm::translate(defaultModel, Vector3(0.0f, -myScale.y, -myScale.z));
+			const RotateData& data{ myRotateData[(int)j] };
+			
+			model = glm::translate(model, data.offset);
+			model = glm::rotate(model, glm::radians(data.degree), data.axis);
+			model = glm::translate(model, -data.offset);
 		}
-		else defaultModel = glm::rotate(defaultModel, glm::radians(faceData[i].rotateDegree.x), Vector3(1.0f, 0.0f, 0.0f));
 		
-		defaultModel = glm::scale(defaultModel, myScale * 2.0f);
-		ShaderManager::getInstance().setMat4("default", "model", defaultModel);
+		model = glm::scale(model, myScale * 2.0f);
+		ShaderManager::getInstance().setMat4("default", "model", model);
 		ShaderManager::getInstance().setVec3("default", "color", faceData[i].color);
 		glDrawArrays(GL_TRIANGLES, i * 6, 6);
 	}
@@ -113,9 +123,41 @@ void Cube15::processKeyInput()
 {
 	const KeyManager& keyManager{ KeyManager::getInstance() };
 
-	if (keyManager.getKeyState(KEY::Y) == KEY_STATE::TAP) keyState[0] = !keyState[0];
-	if (keyManager.getKeyState(KEY::T) == KEY_STATE::TAP) keyState[1] = !keyState[1];
-	if (keyManager.getKeyState(KEY::F) == KEY_STATE::TAP) keyState[2] = !keyState[2];
+	if (keyManager.getKeyState(KEY::Y) == KEY_STATE::TAP)
+	{
+		RotateData newRotate;
+		newRotate.axis = Vector3(0.0f, 1.0f, 0.0f);
+		newRotate.rotateType = 0;
+		for (int i = 0; i < 6; ++i)
+		{
+			faceData[i].rotateData.push_back(newRotate);
+			sort(faceData[i].rotateData.begin(), faceData[i].rotateData.end(), [](const RotateData& a, const RotateData& b) {
+				return a.rotateType < b.rotateType; });
+		}
+	}
+	if (keyManager.getKeyState(KEY::T) == KEY_STATE::TAP)
+	{
+		RotateData newRotate;
+		newRotate.offset = Vector3(0.0f, 0.3, 0.0f);
+		newRotate.axis = Vector3(0.0f, 0.0f, 1.0f);
+		newRotate.rotateType = 2;
+		faceData[4].rotateData.push_back(newRotate);
+		sort(faceData[4].rotateData.begin(), faceData[4].rotateData.end(), [](const RotateData& a, const RotateData& b) {
+			return a.rotateType < b.rotateType; });
+	}
+	if (keyManager.getKeyState(KEY::F) == KEY_STATE::TAP)
+	{
+		RotateData newRotate;
+		newRotate.targetDegree = -180.0f;
+		newRotate.isRoop = false;
+		newRotate.offset = Vector3(0.0f, 0.3, 0.3f);
+		newRotate.axis = Vector3(1.0f, 0.0f, 0.0f);
+		newRotate.rotateType = 1;
+		
+		faceData[0].rotateData.push_back(newRotate);
+		sort(faceData[0].rotateData.begin(), faceData[0].rotateData.end(), [](const RotateData& a, const RotateData& b) {
+			return a.rotateType < b.rotateType; });
+	}
 	if (keyManager.getKeyState(KEY::S) == KEY_STATE::TAP) keyState[3] = !keyState[3];
 	if (keyManager.getKeyState(KEY::B) == KEY_STATE::TAP) keyState[4] = !keyState[4];
 	if (keyManager.getKeyState(KEY::NUM1) == KEY_STATE::TAP) keyState[5] = !keyState[5];
@@ -127,10 +169,6 @@ void Cube15::processKeyInput()
 	{
 		for (int i = 0; i < 9; ++i) keyState[i] = false;
 
-		for (int i = 0; i < 6; ++i)
-		{
-			faceData[i].revolveDegree = Vector3(0.0f, 0.0f, 0.0f);
-			faceData[i].rotateDegree = Vector3(0.0f, 0.0f, 0.0f);
-		}
+		for (int i = 0; i < 6; ++i) faceData[i].rotateData.clear();
 	}
 }
