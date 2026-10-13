@@ -6,13 +6,14 @@
 struct RotateData
 {
 	float degree{};
-	float targetDegree{ 360.0f };	// 이거에 도달했을 때 roop검사
-	bool isRoop{ true };	// 기본적으로 반복회전
+	float targetDegree{ 360.0f };	// 이거에 도달했을 때 loop검사
+	bool isLoop{ true };	// 기본적으로 반복회전
 	float speed{ 90.0f };
 	Vector3 offset{};
 	Vector3 axis{};
-	int rotateType{};	// 0 - 공전, 1 - 기타, 2 - 자전
-	bool isActive{ true };
+	int rotateType{};	// 정렬기준, 행렬곱을 먼저 적용해야 할 수록 큰 값 부여
+	bool isActive{ false };
+	char id{};		// 어떤 키에 대한 회전인지
 };
 
 struct FaceData
