@@ -16,6 +16,26 @@ struct RotateData
 	char id{};		// 어떤 키에 대한 회전인지
 };
 
+class RotateData
+{
+public:
+	void update();
+
+private:
+	float degree{};
+	float targetDegree{ 360.0f };	// 이거에 도달했을 때 loop검사
+	float speed{ 90.0f };
+	Vector3 offset{};
+	Vector3 axis{};
+	int rotateType{};	// 정렬기준, 행렬곱을 먼저 적용해야 할 수록 큰 값 부여
+	bool isActive{ false };
+	char id{};		// 어떤 키에 대한 회전인지
+
+	bool isExpire{};	// 없앨까?
+	bool isReverse{};	// 방향을 바꿀까?
+	bool isStop{};		// 멈출까?
+};
+
 struct FaceData
 {
 	Color color{};

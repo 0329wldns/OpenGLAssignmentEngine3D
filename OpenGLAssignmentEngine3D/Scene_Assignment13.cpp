@@ -49,6 +49,11 @@ void Scene_Assignment13::enter()
 
 	Pyramid13* pyramid = new Pyramid13;
 	createObject(pyramid, OBJECT_GROUP::POLYHENDRON);
+
+	cout << "1/2/3/4/5/6: 육면체의 각 면을 그린다." << endl;
+	cout << "7/8/9/0 : 사각뿔의 삼각형 면을 그린다." << endl;
+	cout << "c: 육면체에서 랜덤한 2개의 면을 그린다." << endl;
+	cout << "t: 사각뿔에서 바닥과 랜덤한 1개의 옆면을 그린다." << endl;
 }
 
 void Scene_Assignment13::exit()
@@ -57,4 +62,5 @@ void Scene_Assignment13::exit()
 	Cube13::setInvisibleAllFace();
 	Pyramid13::setInvisibleAllFace();
 	glDisable(GL_CULL_FACE);
+	system("cls");
 }

@@ -157,6 +157,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Pyramid13.cpp" />
     <ClCompile Include="Pyramid14.cpp" />
+    <ClCompile Include="Pyramid15.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene_Assignment13.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Pyramid13.h" />
     <ClInclude Include="Pyramid14.h" />
+    <ClInclude Include="Pyramid15.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
@@ -200,12 +202,12 @@
     <None Include="default.vert" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="cube.obj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="pyramid.obj">
-      <FileType>Document</FileType>
-    </None>
+    <Object Include="res\cube.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="res\pyramid.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -16,6 +16,9 @@ public:
 	void enter() override;
 	void exit() override;
 
+	const bool getPFlag() const { return pFlag; };
+
 private:
 	bool hFlag{ true };
+	bool pFlag{ false };	// 0 - 육면체, 1 - 사각뿔
 };

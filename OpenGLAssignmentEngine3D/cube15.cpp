@@ -5,6 +5,8 @@
 #include "TimeManager.h"
 #include "KeyManager.h"
 #include "EventFunc.h"
+#include "Scene_Assignment15.h"
+#include "SceneManager.h"
 
 Cube15::Cube15()
 {
@@ -32,7 +34,7 @@ void Cube15::update()
 	processKeyInput();
 	const float dt{ TimeManager::getInstance().getDeltaTime() };
 
-	for (int i{}; i < 6; ++i)
+	for (int i = 0; i < 6; ++i)
 	{
 		vector<RotateData>& myRotateData{ faceData[i].rotateData };
 		auto iter{ myRotateData.begin() };
@@ -131,6 +133,7 @@ void Cube15::update()
 
 void Cube15::render() const
 {
+	if (static_cast<Scene_Assignment15*>(SceneManager::getInstance().getCurScene())->getPFlag()) return;
 	ShaderManager::getInstance().useProgram("default");
 
 	Vector3 myPos{ getPos() };
@@ -259,7 +262,6 @@ void Cube15::processKeyInput()
 
 	if (keyManager.getKeyState(KEY::NUM2) == KEY_STATE::TAP)
 	{
-
 		int face1{ intDist(gen) % 2 }; // 0 or 1
 		int face2{ intDist(gen) % 2 + 2 };	// 2 or 3
 
@@ -341,5 +343,4 @@ void Cube15::initRotateData()
 		std::sort(faceData[i].rotateData.begin(), faceData[i].rotateData.end(),
 			[](const RotateData& a, const RotateData& b) { return a.rotateType < b.rotateType; });
 	}
-
 }

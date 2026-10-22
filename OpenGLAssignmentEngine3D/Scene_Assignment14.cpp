@@ -69,8 +69,17 @@ void Scene_Assignment14::enter()
 {
 	Cube14* cube{ new Cube14 };
 	createObject(cube, OBJECT_GROUP::POLYHENDRON);
+
 	Pyramid14* pyramid{ new Pyramid14 };
 	createObject(pyramid, OBJECT_GROUP::POLYHENDRON);
+
+	cout << "c: 육면체	p: 사각 뿔" << endl;
+	cout << "h: 은면제거 적용/해제" << endl;
+	cout << "w/W: 와이어 객체/솔리드 객체" << endl;
+	cout << "x/X: x축을 기준으로 양/음 방향으로 회전 애니메이션 (자전)" << endl;
+	cout << "y/Y: y축을 기준으로 양/음 방향으로 회전 애니메이션 (자전)" << endl;
+	cout << "←/→/↑/↓: 좌/우/상/하로 객체를 이동한다. (x축, y축으로 이동)" << endl;
+	cout << "s: 초기 위치로 리셋 (모든 애니메이션 멈추기" << endl;
 }
 
 void Scene_Assignment14::exit()
@@ -80,4 +89,6 @@ void Scene_Assignment14::exit()
 	rotateDir.y = 0.0f;
 	drawLine = false;
 	drawMode = false;
+
+	system("cls");
 }

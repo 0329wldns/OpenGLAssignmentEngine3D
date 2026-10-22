@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "Object.h"
+#include "TimeManager.h"
 
 Object::Object()
 	: pos()
@@ -34,4 +35,11 @@ void Object::componantRender() const
 {
 	if (collider != nullptr)
 		collider->render();
+}
+
+void RotateData::update()
+{
+	float dt{ TimeManager::getInstance().getDeltaTime() };
+
+	degree += speed * dt;
 }
