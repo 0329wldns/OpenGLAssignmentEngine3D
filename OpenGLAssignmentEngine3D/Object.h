@@ -3,41 +3,42 @@
 #include "Struct.h"
 #include "collider.h"
 
+// 기본적으로 무한 반복하도록 되어있음
 struct RotateData
 {
-	float degree{};
-	float targetDegree{ 360.0f };	// 이거에 도달했을 때 loop검사
-	bool isLoop{ true };	// 기본적으로 반복회전
-	float speed{ 90.0f };
-	Vector3 offset{};
-	Vector3 axis{};
-	int rotateType{};	// 정렬기준, 행렬곱을 먼저 적용해야 할 수록 큰 값 부여
-	bool isActive{ false };
-	char id{};		// 어떤 키에 대한 회전인지
-};
-
-class RotateData
-{
-public:
 	void update();
+	glm::mat4 getRotationMatrix() const
+	{
+		glm::mat4 rotation{ 1.0f };
+		rotation = glm::translate(rotation, offset);
+		rotation = glm::rotate(rotation, glm::radians(degree), axis);
+		rotation = glm::translate(rotation, -offset);
+		return rotation;
+	}
 
-private:
+	void toggleActive() { isActive = !isActive; }
+
 	float degree{};
-	float targetDegree{ 360.0f };	// 이거에 도달했을 때 loop검사
-	float speed{ 90.0f };
+	float targetDegree{ 360.0f };
+	float speed{ 90.0f };			// 방향 포함
 	Vector3 offset{};
 	Vector3 axis{};
-	int rotateType{};	// 정렬기준, 행렬곱을 먼저 적용해야 할 수록 큰 값 부여
-	bool isActive{ false };
-	char id{};		// 어떤 키에 대한 회전인지
-
-	bool isExpire{};	// 없앨까?
-	bool isReverse{};	// 방향을 바꿀까?
-	bool isStop{};		// 멈출까?
+	int rotateType{};				// 정렬기준, 행렬곱을 먼저 적용해야 할 수록 큰 값 부여
+	char id{};						// 어떤 키에 대한 회전인지
+	bool isActive{ false };			// 회전이 활성화 되었는지, update 여부 결정
+	bool isEnd{ false };			// targetDegree에 도달했는지, isExpire가 true일 때만 의미 있음
+	
+	// targetDegree에 도달했을 때
+	bool isExpire{ false };			// 없앨까?
+	bool isReverse{ false };		// 방향을 바꿀까?
+	bool isStop{ false };			// 멈출까?
 };
 
 struct FaceData
 {
+	void update();
+	void addRotateData(const RotateData&);
+
 	Color color{};
 	bool isVisible{ false };
 

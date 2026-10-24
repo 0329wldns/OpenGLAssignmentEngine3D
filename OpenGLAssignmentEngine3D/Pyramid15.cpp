@@ -33,60 +33,7 @@ void Pyramid15::update()
 
 	processKeyInput();
 
-	for (int i = 0; i < 5; ++i)
-	{
-		vector<RotateData>& myRotateData{ faceData[i].rotateData };
-		auto iter{ myRotateData.begin() };
-		for (; iter != myRotateData.end(); )
-		{
-			RotateData& data{ *iter };
-			if (!data.isActive)
-			{
-				++iter;
-				continue;
-			}
-			bool isLoop{ data.isLoop };
-			float& degree{ data.degree };
-			float targetDegree{ data.targetDegree };
-			float speed{ data.speed };
-			bool& isActive{ data.isActive };
-			char id{ data.id };
-
-			if (targetDegree >= 0)
-			{
-				degree += speed * dt;
-				if (degree > targetDegree)
-				{
-					if (isLoop) degree -= targetDegree;
-					else
-					{
-						if (id == '6')
-						{
-							degree = targetDegree;
-							isActive = false;
-						}
-					}
-				}
-			}
-			else
-			{
-				degree -= speed * dt;
-				if (degree < targetDegree)
-				{
-					if (isLoop) degree += targetDegree;
-					else
-					{
-						if (id == '6')
-						{
-							degree = targetDegree;
-							isActive = false;
-						}
-					}
-				}
-			}
-			++iter;
-		}
-	}
+	for (int i = 0; i < 5; ++i) faceData[i].update();
 
 	if (KeyManager::getInstance().getKeyState(KEY::R) == KEY_STATE::TAP)
 	{
@@ -144,19 +91,19 @@ void Pyramid15::initRotateData()
 	y.axis = Vector3(0.0f, 1.0f, 0.0f);
 	y.rotateType = 0;
 	y.id = 'y';
-	for (int i = 0; i < 5; ++i) faceData[i].rotateData.push_back(y);
+	for (int i = 0; i < 5; ++i) faceData[i].addRotateData(y);
 
 	RotateData num6;
 	num6.axis = Vector3(1.0f, 0.0f, 0.0f);
 	num6.offset = Vector3(0.0f, -0.3f, 0.3f);
-	num6.isLoop = false;
-	num6.targetDegree = 0.0f;
+	num6.isExpire = true;
+	num6.targetDegree = 233.0f;
 	num6.rotateType = 1;
 	num6.id = '6';
-	faceData[1].rotateData.push_back(num6);
+	faceData[1].addRotateData(num6);
 
 	num6.offset = Vector3(0.0f, -0.3f, -0.3f);
-	faceData[2].rotateData.push_back(num6);
+	faceData[2].addRotateData(num6);
 }
 
 void Pyramid15::processKeyInput()
@@ -175,10 +122,7 @@ void Pyramid15::processKeyInput()
 			}
 			if (data.id == '6' && keyManager.getKeyState(KEY::NUM6) == KEY_STATE::TAP)
 			{
-				if (!data.isActive) data.isActive = true;
-
-				if (data.targetDegree > 0) data.targetDegree = 0.0f;
-				else data.targetDegree = 233.0f;
+				data.isActive = !data.isActive;
 				continue;
 			}
 		}
