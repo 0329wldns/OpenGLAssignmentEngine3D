@@ -14,6 +14,7 @@ public:
 	void setMat4(const string& name, const string& uniformName, const glm::mat4& mat);
 	void setVec3(const string& name, const string& uniformName, const glm::vec3& vec);
 	void setFloat(const string& name, const string& uniformName, float value);
+	void setBool(const string& name, const string& uniformName, bool value);
 
 private:
 	ShaderManager() = default;

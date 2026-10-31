@@ -11,7 +11,7 @@
 Cube15::Cube15()
 {
 	setPos(0.0f, 0.0f, 0.0f);
-	setScale(0.3f, 0.3f, 0.3f);
+	setScale(200.0f, 200.0f, 200.0f);
 
 	faceData[0].color = COLOR_RED;
 	faceData[1].color = COLOR_YELLOW;
@@ -20,7 +20,7 @@ Cube15::Cube15()
 	faceData[4].color = COLOR_GREEN + COLOR_BLUE;
 	faceData[5].color = COLOR_RED + COLOR_BLUE;
 
-	for (int i = 0; i < 6; ++i) faceData[i].scale = Vector3(0.3f, 0.3f, 0.3f);
+	for (int i = 0; i < 6; ++i) faceData[i].scale = getScale();
 	initRotateData();
 }
 
@@ -36,8 +36,8 @@ void Cube15::update()
 
 	for (int i = 0; i < 6; ++i) faceData[i].update();
 
-	if (bFlag) faceData[1].scale -= Vector3(0.3f, 0.3f, 0.0f) * dt;
-	else faceData[1].scale += Vector3(0.3f, 0.3f, 0.0f) * dt;
+	if (bFlag) faceData[1].scale -= Vector3(300.0f, 300.0f, 300.0f) * dt;
+	else faceData[1].scale += Vector3(300.0f, 300.0f, 0.0f) * dt;
 
 	bool isLessThanZero{ glm::any(glm::lessThanEqual(faceData[1].scale, Vector3(0.0f, 0.0f, 0.0f))) };
 	bool isGreaterThanOrg{ glm::all(glm::greaterThanEqual(faceData[1].scale, getScale())) };
@@ -166,16 +166,25 @@ void Cube15::processKeyInput()
 		RotateData rot;
 		rot.id = '2';
 		rot.axis = Vector3(0.0f, 1.0f, 0.0f);
-		rot.speed = 180.0f;
+		
 		rot.isExpire = true;
 		rot.rotateType = 1;
 		rot.isActive = true;
 
-		if ((face1 + face2) % 2) rot.targetDegree = 90.0f;
-		else rot.targetDegree = -90.0f;
+		if ((face1 + face2) % 2)
+		{
+			rot.targetDegree = 90.0f;
+			rot.speed = 180.0f;
+		}
+		else
+		{
+			rot.targetDegree = -90.0f;
+			rot.speed = -180.0f;
+		}
 
 		faceData[face1].addRotateData(rot);
 		rot.targetDegree = -rot.targetDegree;
+		rot.speed = -rot.speed;
 		faceData[face2].addRotateData(rot);
 	}
 
@@ -198,7 +207,7 @@ void Cube15::initRotateData()
 	for (int i = 0; i < 6; ++i) faceData[i].addRotateData(y);
 
 	RotateData t;
-	t.offset = Vector3(0.0f, 0.3f, 0.0f);
+	t.offset = Vector3(0.0f, 200.0f, 0.0f);
 	t.axis = Vector3(0.0f, 0.0f, 1.0f);
 	t.rotateType = 2;
 	t.id = 't';

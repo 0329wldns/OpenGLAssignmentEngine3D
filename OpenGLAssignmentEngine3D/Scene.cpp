@@ -66,7 +66,7 @@ void Scene::drawAxis() const
 	glm::mat4 model{ 1.0f };
 	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::scale(model, Vector3(2.0f));
+	model = glm::scale(model, Vector3((float)SCREEN_HEIGHT, 1.0f, 1.0f));
 	ShaderManager::getInstance().setMat4("default", "model", model);
 	ShaderManager::getInstance().setVec3("default", "color", COLOR_RED);
 	ShaderManager::getInstance().setFloat("default", "transparency", 1.0f);
@@ -78,7 +78,7 @@ void Scene::drawAxis() const
 	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	model = glm::scale(model, Vector3(2.0f));
+	model = glm::scale(model, Vector3((float)SCREEN_HEIGHT, 1.0f, 1.0f));
 	ShaderManager::getInstance().setMat4("default", "model", model);
 	ShaderManager::getInstance().setVec3("default", "color", COLOR_GREEN);
 
@@ -88,7 +88,7 @@ void Scene::drawAxis() const
 	model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::scale(model, Vector3(2.0f));
+	model = glm::scale(model, Vector3((float)SCREEN_HEIGHT, 1.0f, 1.0f));
 	ShaderManager::getInstance().setMat4("default", "model", model);
 	ShaderManager::getInstance().setVec3("default", "color", COLOR_BLUE);
 

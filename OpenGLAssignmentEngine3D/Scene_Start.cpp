@@ -21,7 +21,7 @@ void Scene_Start::enter()
 	for (int i = (int)SCENE_TYPE::ASSIGNMENT13; i < (int)SCENE_TYPE::END; ++i)
 	{
 		UIButton* button = new UIButton();
-		button->setPos(-0.5f + (i - 1) % 3 * 0.5f, 0.25f - (i - 1) / 3 * 0.5f);
+		button->setPos(-400.0f + (i - 1) % 3 * 400.0f, 200.0f - ((i - 1) / 3) * 200.0f);
 		button->setTargetScene((SCENE_TYPE)i);
 		createObject(button, OBJECT_GROUP::UIBUTTON);
 	}

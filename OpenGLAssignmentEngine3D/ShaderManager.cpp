@@ -39,6 +39,13 @@ void ShaderManager::setFloat(const std::string& name, const std::string& uniform
     glUniform1f(location, value);
 }
 
+void ShaderManager::setBool(const string& name, const string& uniformName, bool value)
+{
+    uint32_t program{ shaderMap[name] };
+    int location{ glGetUniformLocation(program, uniformName.c_str()) };
+    glUniform1f(location, value);
+}
+
 void ShaderManager::loadShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath)
 {
     std::string vertexCode{ readShaderFile(vertexPath) };

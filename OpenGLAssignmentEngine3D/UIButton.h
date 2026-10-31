@@ -25,6 +25,6 @@ private:
 	bool isHover; // 마우스가 버튼 위에 올라와 있는지 상태
 	float degree;
 
-	inline static const float width{ 0.12f };
-	inline static const float height{ 0.08f };
+	inline static const float width{ 90.0f };
+	inline static const float height{ 45.0f };
 };

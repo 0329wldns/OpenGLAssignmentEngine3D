@@ -111,6 +111,12 @@
     <ClCompile Include="Pyramid15.cpp">
       <Filter>소스 파일\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Assignment18.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere18.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Struct.h">
@@ -194,6 +200,12 @@
     <ClInclude Include="Pyramid15.h">
       <Filter>헤더 파일\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Assignment18.h">
+      <Filter>헤더 파일\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere18.h">
+      <Filter>헤더 파일\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -204,7 +216,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="res\cube.obj" />
-    <Object Include="res\pyramid.obj" />
+    <Object Include="res\sphere.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="res\cube.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="res\pyramid.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
   </ItemGroup>
 </Project>

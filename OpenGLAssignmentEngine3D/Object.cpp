@@ -45,7 +45,9 @@ void RotateData::update()
 
 	degree += speed * dt;
 
-	if (degree >= abs(targetDegree))
+	bool isReachedTarget{ (targetDegree >= 0) ? (degree >= targetDegree) : (degree <= targetDegree) };
+
+	if (isReachedTarget)
 	{
 		if (isExpire)
 		{
@@ -53,12 +55,13 @@ void RotateData::update()
 			isActive = false;
 			return;
 		}
+		if (isStop) isActive = false;
 		if (isReverse)
 		{
 			speed *= -1.0f;
 			targetDegree -= targetDegree;
 		}
-		if (isStop) isActive = false;
+		else degree -= targetDegree;
 	}
 }
 

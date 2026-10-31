@@ -163,8 +163,10 @@
     <ClCompile Include="Scene_Assignment13.cpp" />
     <ClCompile Include="Scene_Assignment14.cpp" />
     <ClCompile Include="Scene_Assignment15.cpp" />
+    <ClCompile Include="Scene_Assignment18.cpp" />
     <ClCompile Include="Scene_Start.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="Sphere18.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIButton.cpp" />
   </ItemGroup>
@@ -190,9 +192,11 @@
     <ClInclude Include="Scene_Assignment13.h" />
     <ClInclude Include="Scene_Assignment14.h" />
     <ClInclude Include="Scene_Assignment15.h" />
+    <ClInclude Include="Scene_Assignment18.h" />
     <ClInclude Include="Scene_Start.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Sphere18.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIButton.h" />
@@ -206,6 +210,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Object>
     <Object Include="res\pyramid.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="res\sphere.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Object>
   </ItemGroup>

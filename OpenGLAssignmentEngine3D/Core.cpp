@@ -58,16 +58,24 @@ int Core::init()
 	ShaderManager::getInstance().init();
 	MeshManager::getInstance().init();
 
-	// z부호 변경
-	glm::mat4 nagativeZ
-	{ 
-		1.0f, 0.0f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f, 0.0f,
-		0.0f, 0.0f,-1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f 
+	// 뷰변환
+	glm::mat4 view{ 
+		glm::lookAt(glm::vec3(0.0f, 0.0f, 600.0f)
+		, glm::vec3(0.0f, 0.0f, 0.0f)
+		, glm::vec3(0.0f, 1.0f, 0.0f)) 
 	};
 	ShaderManager::getInstance().useProgram("default");
-	ShaderManager::getInstance().setMat4("default", "nagativeZ", nagativeZ);
+	ShaderManager::getInstance().setMat4("default", "view", view);
+
+	// 직각 투영 - 기본값
+	glm::mat4 ortho{ glm::ortho(-(float)SCREEN_WIDTH / 2.0f, (float)SCREEN_WIDTH / 2.0f, -(float)SCREEN_HEIGHT / 2.0f, (float)SCREEN_HEIGHT / 2.0f, 0.0f, 1200.0f) };
+	ShaderManager::getInstance().useProgram("default");
+	ShaderManager::getInstance().setMat4("default", "ortho", ortho);
+
+	// 원근 투영
+	glm::mat4 perspective{ glm::perspective(glm::radians(90.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 1200.0f) };
+	ShaderManager::getInstance().useProgram("default");
+	ShaderManager::getInstance().setMat4("default", "perspective", perspective);
 
 	// 배경색 설정
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

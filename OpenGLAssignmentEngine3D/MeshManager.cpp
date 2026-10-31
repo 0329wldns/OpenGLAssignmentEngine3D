@@ -87,6 +87,7 @@ void MeshManager::init()
 
 	loadOBJ("cube", "res/cube.obj", glm::vec3(1.0f, 1.0f, 1.0f));
 	loadOBJ("pyramid", "res/pyramid.obj", glm::vec3(1.0f, 1.0f, 1.0f));
+	loadOBJ("sphere", "res/sphere.obj", glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 bool MeshManager::loadOBJ(const std::string& name, const std::string& filePath, const glm::vec3& defaultColor)

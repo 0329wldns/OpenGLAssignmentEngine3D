@@ -11,7 +11,7 @@ UIButton::UIButton()
 	, isHover(false)
 	, degree(30.0f)
 {
-	setScale(width, height, 0.08f);
+	setScale(width, height, height);
 	setColor(COLOR_GRAY);
 }
 
@@ -27,7 +27,6 @@ void UIButton::update()
 		myScale.y += height * 3.0f * dt;
 		myScale.z += height * 3.0f * dt;
 		degree += 90.0f * dt;
-		
 	}
 	else
 	{
@@ -72,13 +71,14 @@ void UIButton::render() const
 
 	glm::mat4 model{ 1.0f };
 	model = glm::translate(model, myPos);
-	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(15.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(degree), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, myScale * 2.0f);
 
 	ShaderManager::getInstance().setMat4("default", "model", model);
 	ShaderManager::getInstance().setVec3("default", "color", color);
 	ShaderManager::getInstance().setFloat("default", "transparency", 1.0f);
+	ShaderManager::getInstance().setBool("default", "projectionMode", false);
 
 	MeshManager::getInstance().drawMesh("cube", false);
 }

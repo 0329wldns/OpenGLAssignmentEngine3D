@@ -53,15 +53,8 @@ void KeyManager::update()
 	glfwGetCursorPos(window, &mouseX, &mouseY);
 	mouseY = SCREEN_HEIGHT - mouseY;
 
-	// 화면 좌표를 NDC (-1..1)로 변환
-	float ndcX = static_cast<float>((mouseX / SCREEN_WIDTH) * 2.0 - 1.0);
-	float ndcY = static_cast<float>((mouseY / SCREEN_HEIGHT) * 2.0 - 1.0);
-	// 간단한 클램프 (정상 범위를 벗어나지 않도록)
-	if (ndcX < -1.0f) ndcX = -1.0f; else if (ndcX > 1.0f) ndcX = 1.0f;
-	if (ndcY < -1.0f) ndcY = -1.0f; else if (ndcY > 1.0f) ndcY = 1.0f;
-
-	curMousePos.x = ndcX;
-	curMousePos.y = ndcY;
+	curMousePos.x = (float)mouseX - (float)SCREEN_WIDTH / 2.0f;
+	curMousePos.y = (float)mouseY - (float)SCREEN_HEIGHT / 2.0f;
 
 	for (int i{}; i < (int)KEY::LAST; ++i)
 	{
@@ -70,7 +63,6 @@ void KeyManager::update()
 		// 마우스와 키보드는 GLFW 검사 함수가 서로 다름
 		if (arrVK[i] == GLFW_MOUSE_BUTTON_LEFT || arrVK[i] == GLFW_MOUSE_BUTTON_RIGHT)
 		{
-			// 마우스 버튼 체크는 픽셀 좌표 기준으로 검사
 			if (mouseX > 0 && mouseX < SCREEN_WIDTH
 				&& mouseY > 0 && mouseY < SCREEN_HEIGHT)
 				isPressed = (glfwGetMouseButton(window, arrVK[i]) == GLFW_PRESS);
