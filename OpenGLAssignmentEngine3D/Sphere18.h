@@ -11,12 +11,19 @@ public:
 	void update() override;
 	void render() const override;
 
+	static void setCenter(Sphere18* _center) { center = _center; }
+
 	void addMoon(Sphere18* child);
 
+
 private:
+	inline static Vector3 moveDir;
+	inline static float speed{ 300.0f };
+	inline static Sphere18* center{ nullptr };	// 중심 행성
+
 	Color color;
-	vector<Sphere18*> moon;
-	float orbitRadius;
+	vector<Sphere18*> moon;	// 위성들
+	float orbitRadius;	// 공전 반경
 	float orbitTiltDeg;	// 공전 축의 기울기, + -> 반시계 방향
 	RotateData orbit;	// 공전
 };

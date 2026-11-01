@@ -12,8 +12,6 @@ void Scene_Assignment18::processKeyInput()
 		projectionMode = !projectionMode;
 		ShaderManager::getInstance().setBool("default", "projectionMode", projectionMode);
 	}
-	if (KeyManager::getInstance().getKeyState(KEY::MINUS) == KEY_STATE::TAP) glDisable(GL_CULL_FACE);
-	if (KeyManager::getInstance().getKeyState(KEY::EQUAL) == KEY_STATE::TAP) glEnable(GL_CULL_FACE);
 	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP) changeScene(SCENE_TYPE::START);
 }
 
@@ -29,13 +27,15 @@ void Scene_Assignment18::drawBG() const
 
 void Scene_Assignment18::enter()
 {
-	Sphere18* center = new Sphere18(COLOR_BLACK, Vector3(100.0f, 100.0f, 100.0f));
+	Sphere18* center = new Sphere18(COLOR_RED, Vector3(100.0f, 100.0f, 100.0f));
 	Sphere18* moon = new Sphere18(COLOR_RED + COLOR_BLUE, Vector3(50.0f, 50.0f, 50.0f), 300.0f);
-	Sphere18* moon1 = new Sphere18(COLOR_RED, Vector3(30.0f, 30.0f, 30.0f), 100.0f, -45.0f);
+	Sphere18* moon1 = new Sphere18(COLOR_GREEN, Vector3(30.0f, 30.0f, 30.0f), 100.0f, -45.0f);
 	Sphere18* moon2 = new Sphere18(COLOR_BLUE, Vector3(15.0f, 15.0f, 15.0f), 50.0f);
 	center->addMoon(moon);
 	moon->addMoon(moon1);
 	moon1->addMoon(moon2);
+
+	Sphere18::setCenter(center);
 
 	createObject(center, OBJECT_GROUP::POLYHENDRON);
 	createObject(moon, OBJECT_GROUP::POLYHENDRON);
