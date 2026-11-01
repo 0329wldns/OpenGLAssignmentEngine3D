@@ -12,6 +12,10 @@ void Scene_Assignment18::processKeyInput()
 		projectionMode = !projectionMode;
 		ShaderManager::getInstance().setBool("default", "projectionMode", projectionMode);
 	}
+	if (KeyManager::getInstance().getKeyState(KEY::M) == KEY_STATE::TAP)
+	{
+		drawMode = !drawMode;
+	}
 	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP) changeScene(SCENE_TYPE::START);
 }
 

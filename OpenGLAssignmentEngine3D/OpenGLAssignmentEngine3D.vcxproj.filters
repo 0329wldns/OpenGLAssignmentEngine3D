@@ -216,13 +216,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="res\sphere.obj">
-      <Filter>리소스 파일</Filter>
-    </Object>
     <Object Include="res\cube.obj">
       <Filter>리소스 파일</Filter>
     </Object>
     <Object Include="res\pyramid.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="res\sphere_16x16.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="res\sphere_32x32.obj">
       <Filter>리소스 파일</Filter>
     </Object>
   </ItemGroup>

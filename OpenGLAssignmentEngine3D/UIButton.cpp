@@ -81,4 +81,5 @@ void UIButton::render() const
 	ShaderManager::getInstance().setBool("default", "projectionMode", false);
 
 	MeshManager::getInstance().drawMesh("cube", false);
+
 }

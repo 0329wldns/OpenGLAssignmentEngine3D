@@ -16,6 +16,9 @@ public:
 	void enter() override;
 	void exit() override;
 
+	bool getDrawMode() const { return drawMode; }
+
 private:
 	bool projectionMode{ false };	// 1 : 원근, 0 : 직교
+	bool drawMode{ false };	// 1 : 와이어, 0 : 솔리드
 };

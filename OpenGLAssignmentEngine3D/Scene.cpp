@@ -77,7 +77,7 @@ void Scene::drawAxis() const
 	model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	model = glm::scale(model, Vector3((float)SCREEN_HEIGHT, 1.0f, 1.0f));
 	ShaderManager::getInstance().setMat4("default", "model", model);
 	ShaderManager::getInstance().setVec3("default", "color", COLOR_GREEN);

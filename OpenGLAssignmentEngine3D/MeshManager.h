@@ -30,6 +30,7 @@ public:
 	void drawQuad(bool drawLine = false) const;
 	void drawTriangle(bool drawLine = false) const;
 	void drawLine() const;
+	void drawCircle() const;
 
 	MeshData getMeshData(const std::string& name) const
 	{
@@ -55,6 +56,10 @@ private:
 	// 선 공용 버퍼
 	uint32_t lineVAO{};
 	uint32_t lineVBO{};
+
+	// 원 공용 버퍼
+	uint32_t circleVAO{};
+	uint32_t circleVBO{};
 
 	// 동적 로드된 OBJ 메쉬 보관용 Map
 	std::unordered_map<std::string, MeshData> meshMap{};

@@ -85,9 +85,39 @@ void MeshManager::init()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
+	// 원 버퍼 세팅
+	std::vector<std::array<float, 6>> circlrVertices{};
+	const int segmentCount{ 1000 };
+	const float radius{ 1.0f };
+	circlrVertices.reserve(segmentCount);
+
+	for (int i{}; i < segmentCount; ++i)
+	{
+		float theta{ 2.0f * glm::pi<float>() * static_cast<float>(i) / static_cast<float>(segmentCount) };
+		float x{ radius * std::cos(theta) };
+		float y{ radius * std::sin(theta) };
+
+		circlrVertices.push_back(std::array<float, 6>{x, y, 0.0f, 1.0f, 1.0f, 1.0f});
+	}
+
+	glGenVertexArrays(1, &circleVAO);
+	glGenBuffers(1, &circleVBO);
+
+	glBindVertexArray(circleVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
+	glBufferData(GL_ARRAY_BUFFER, circlrVertices.size() * sizeof(std::array<float, 6>), circlrVertices.data(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	
 	loadOBJ("cube", "res/cube.obj", glm::vec3(1.0f, 1.0f, 1.0f));
 	loadOBJ("pyramid", "res/pyramid.obj", glm::vec3(1.0f, 1.0f, 1.0f));
-	loadOBJ("sphere", "res/sphere.obj", glm::vec3(1.0f, 1.0f, 1.0f));
+	loadOBJ("sphere", "res/sphere_16x16.obj", glm::vec3(1.0f, 1.0f, 1.0f));
 }
 
 bool MeshManager::loadOBJ(const std::string& name, const std::string& filePath, const glm::vec3& defaultColor)
@@ -283,6 +313,15 @@ void MeshManager::drawLine() const
 	glBindVertexArray(lineVAO);
 
 	glDrawArrays(GL_LINES, 0, 2);
+
+	glBindVertexArray(0);
+}
+
+void MeshManager::drawCircle() const
+{
+	glBindVertexArray(circleVAO);
+
+	glDrawArrays(GL_LINE_LOOP, 0, 1000);
 
 	glBindVertexArray(0);
 }
