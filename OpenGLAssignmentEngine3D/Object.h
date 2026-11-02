@@ -22,7 +22,7 @@ struct RotateData
 	float targetDegree{ 360.0f };
 	float speed{ 90.0f };			// 방향 포함
 	Vector3 offset{};
-	Vector3 axis{};
+	Vector3 axis{0.0f, 1.0f, 0.0f};
 	int rotateType{};				// 정렬기준, 행렬곱을 먼저 적용해야 할 수록 큰 값 부여
 	char id{};						// 어떤 키에 대한 회전인지
 	bool isActive{ false };			// 회전이 활성화 되었는지, update 여부 결정

@@ -11,12 +11,15 @@ public:
 	void processKeyInput() override;
 	void update();
 	void drawBG() const override;
-	void drawUI() const override;
+	void drawUI() const override {};
 
 	void enter() override;
 	void exit() override;
 
 private:
 	Vector3 cameraPos{};
+	Vector3 cemeraAt{};
 	Vector3 cameraMoveDir{};
+	RotateData cameraRotate;
+	RotateData cameraOrbit;
 };

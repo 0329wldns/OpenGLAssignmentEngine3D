@@ -168,6 +168,7 @@
     <ClCompile Include="Scene_Start.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Sphere18.cpp" />
+    <ClCompile Include="Tank.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIButton.cpp" />
   </ItemGroup>
@@ -200,6 +201,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sphere18.h" />
     <ClInclude Include="Struct.h" />
+    <ClInclude Include="Tank.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIButton.h" />
   </ItemGroup>

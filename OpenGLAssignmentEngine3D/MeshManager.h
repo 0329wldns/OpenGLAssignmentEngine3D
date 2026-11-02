@@ -31,6 +31,7 @@ public:
 	void drawTriangle(bool drawLine = false) const;
 	void drawLine() const;
 	void drawCircle() const;
+	void drawDot() const;
 
 	MeshData getMeshData(const std::string& name) const
 	{

@@ -59,7 +59,7 @@ void RotateData::update()
 		if (isReverse)
 		{
 			speed *= -1.0f;
-			targetDegree -= targetDegree;
+			targetDegree *= -1.0f;
 		}
 		else degree -= targetDegree;
 	}

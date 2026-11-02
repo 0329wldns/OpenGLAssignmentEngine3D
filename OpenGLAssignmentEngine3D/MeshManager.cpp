@@ -325,3 +325,11 @@ void MeshManager::drawCircle() const
 
 	glBindVertexArray(0);
 }
+
+void MeshManager::drawDot() const
+{
+	glPointSize(10.0f);
+	glBindVertexArray(circleVAO);
+	glDrawArrays(GL_POINTS, 0, 1);
+	glBindVertexArray(0);
+}
