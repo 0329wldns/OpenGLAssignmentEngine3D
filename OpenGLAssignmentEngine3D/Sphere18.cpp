@@ -7,8 +7,11 @@
 #include "SceneManager.h"
 #include "Scene_Assignment18.h"
 
-Sphere18::Sphere18(Color _color, Vector3 _scale, float _orbitRadius, float _orbitTiltDeg)
-	: color(_color), orbitRadius(_orbitRadius), orbitTiltDeg(_orbitTiltDeg)
+Sphere18::Sphere18(Color _color, Vector3 _scale, float _orbitRadius, float _orbitTiltDeg, bool _useOrbitRotate)
+	: color(_color)
+	, orbitRadius(_orbitRadius)
+	, orbitTiltDeg(_orbitTiltDeg)
+	, useOrbitRotate(_useOrbitRotate)
 {
 	setScale(_scale);
 	setPos(orbitRadius, 0.0f, 0.0f);
@@ -17,6 +20,13 @@ Sphere18::Sphere18(Color _color, Vector3 _scale, float _orbitRadius, float _orbi
 	orbit.axis = Vector3(0.0f, 1.0f, 0.0f);
 	orbit.isActive = true;
 	orbit.speed = 45.0f + realDist(gen) * 135.0f;	// 45 ~ 180
+
+	if (useOrbitRotate)
+	{
+		orbitRotate.axis = Vector3(0.0f, 0.0f, 1.0f);
+		orbitRotate.isActive = false;
+		orbitRotate.speed = 90.0f;
+	}
 }
 
 Sphere18::~Sphere18()
@@ -55,6 +65,17 @@ void Sphere18::update()
 	glm::mat4 rotation{ orbit.getRotationMatrix() };
 	myPos = rotation * glm::vec4(myPos, 1.0f);
 
+	if (useOrbitRotate)
+	{
+		if (KeyManager::getInstance().getKeyState(KEY::NUM3) == KEY_STATE::TAP)
+		{
+			orbitRotate.isActive = !orbitRotate.isActive;
+		}
+		orbitRotate.update();
+
+		myPos = orbitRotate.getRotationMatrix() * glm::vec4(myPos, 1.0f);
+	}
+
 	myPos -= orbit.offset;
 	myPos = glm::rotate(glm::mat4(1.0f), glm::radians(orbitTiltDeg), Vector3(0.0f, 0.0f, 1.0f)) * glm::vec4(myPos, 1.0f);
 	myPos += orbit.offset;
@@ -66,7 +87,7 @@ void Sphere18::update()
 		else if (m->orbitRadius >= m->orgOrbitRadius * 1.5f) m->orbitRadius = m->orgOrbitRadius * 1.5f;
 
 		m->setPos(myPos + Vector3(m->orbitRadius, 0.0f, 0.0f));
-		m->orbit.offset = myPos;
+		m->orbitRotate.offset = m->orbit.offset = myPos;
 	}
 
 	setPos(myPos);
@@ -79,8 +100,8 @@ void Sphere18::render() const
 	ShaderManager::getInstance().useProgram("default");
 
 	glm::mat4 model{ 1.0f };
-	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	// model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	// model = glm::rotate(model, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::translate(model, getPos());
 	model = glm::scale(model, getScale());
 
@@ -89,11 +110,11 @@ void Sphere18::render() const
 
 	MeshManager::getInstance().drawMesh("sphere", drawMode);
 
-
 	glm::mat4 orbitModel{ 1.0f };
-	orbitModel = glm::rotate(orbitModel, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	orbitModel = glm::rotate(orbitModel, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	// orbitModel = glm::rotate(orbitModel, glm::radians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	// orbitModel = glm::rotate(orbitModel, glm::radians(30.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	orbitModel = glm::translate(orbitModel, orbit.offset);
+	orbitModel = glm::rotate(orbitModel, glm::radians(orbitRotate.degree), Vector3(0.0f, 0.0f, 1.0f));
 	orbitModel = glm::rotate(orbitModel, glm::radians(orbitTiltDeg), Vector3(0.0f, 0.0f, 1.0f));
 	orbitModel = glm::scale(orbitModel, Vector3(orbitRadius, orbitRadius, orbitRadius));
 
