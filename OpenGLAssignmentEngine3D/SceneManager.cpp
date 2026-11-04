@@ -8,6 +8,7 @@
 // #include "Scene_Assignment17.h"
 #include "Scene_Assignment18.h"
 #include "Scene_Assignment19.h"
+#include "Scene_Assignment23.h"
 
 SceneManager::SceneManager()
 	: scene()
@@ -25,6 +26,7 @@ void SceneManager::init()
 	// scene[(int)SCENE_TYPE::ASSIGNMENT17] = new Scene_Assignment17;
 	scene[(int)SCENE_TYPE::ASSIGNMENT18] = new Scene_Assignment18;
 	scene[(int)SCENE_TYPE::ASSIGNMENT19] = new Scene_Assignment19;
+	scene[(int)SCENE_TYPE::ASSIGNMENT23] = new Scene_Assignment23;
 
 	curScene = scene[(int)SCENE_TYPE::START];
 	curScene->enter();

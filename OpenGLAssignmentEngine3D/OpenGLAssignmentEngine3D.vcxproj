@@ -165,6 +165,7 @@
     <ClCompile Include="Scene_Assignment15.cpp" />
     <ClCompile Include="Scene_Assignment18.cpp" />
     <ClCompile Include="Scene_Assignment19.cpp" />
+    <ClCompile Include="Scene_Assignment23.cpp" />
     <ClCompile Include="Scene_Start.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Sphere18.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Scene_Assignment15.h" />
     <ClInclude Include="Scene_Assignment18.h" />
     <ClInclude Include="Scene_Assignment19.h" />
+    <ClInclude Include="Scene_Assignment23.h" />
     <ClInclude Include="Scene_Start.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Singleton.h" />
