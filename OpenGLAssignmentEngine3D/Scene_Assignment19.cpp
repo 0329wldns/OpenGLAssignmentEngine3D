@@ -9,8 +9,6 @@
 
 Scene_Assignment19::Scene_Assignment19()
 {
-	cameraPos.y = 300.0f;
-	cameraPos.z = 600.0f;
 }
 
 void Scene_Assignment19::processKeyInput()
@@ -39,23 +37,20 @@ void Scene_Assignment19::processKeyInput()
 void Scene_Assignment19::update()
 {
 	float dt{ TimeManager::getInstance().getDeltaTime() };
-	float cameraDist{ glm::length(Vector2(0.0f) - Vector2(cameraPos.x, cameraPos.z)) };
+	Vector3 finalCameraPos{};
+
+	cameraPos += cameraMoveDir * 300.0f * dt;
+	float dist{ glm::length(Vector3(0.0f, cameraPos.y, 0.0f) - cameraPos)};
 
 	cameraRotate.update();
 	cameraOrbit.update();
 
-	cemeraAt = cameraRotate.getRotationMatrix() * glm::vec4(0.0f, 0.0f, -200.0f, 1.0f);
-	cameraPos = cameraOrbit.getRotationMatrix() * glm::vec4(0.0f, cameraPos.y, cameraDist, 1.0f);
+	cameraAt = dist * cameraRotate.getRotationMatrix() * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
 
-	cameraPos += cameraMoveDir * 300.0f * dt;
-	cemeraAt += cameraPos;
+	cameraAt += cameraPos;
+	// finalCameraPos = cameraOrbit.getRotationMatrix() * glm::vec4(0.0f, 0.0f, dist, 1.0f);
 
-	glm::mat4 view{
-		glm::lookAt(Vector3(cameraPos.x, cameraPos.y, cameraPos.z)
-		//, Vector3(0.0f, cemeraAt.y, 0.0f)
-		, Vector3(cemeraAt.x, cemeraAt.y, cemeraAt.z - 200.0f)
-		, Vector3(0.0f, 1.0f, 0.0f))
-	};
+	glm::mat4 view{ glm::lookAt(cameraPos, cameraAt, Vector3(0.0f, 1.0f, 0.0f))};
 	ShaderManager::getInstance().useProgram("default");
 	ShaderManager::getInstance().setMat4("default", "view", view);
 	
@@ -81,6 +76,13 @@ void Scene_Assignment19::enter()
 	createObject(tank, OBJECT_GROUP::POLYHENDRON);
 
 	ShaderManager::getInstance().setBool("default", "projectionMode", true);
+
+	cameraPos = Vector3(0.0f, 300.0f, 300.0f);
+	cameraAt = Vector3(0.0f, cameraPos.y, 0.0f);
+	cameraOrbit.degree = 0.0f;
+	cameraRotate.degree = 0.0f;
+	cameraOrbit.isActive = false;
+	cameraRotate.isActive = false;
 }
 
 void Scene_Assignment19::exit()

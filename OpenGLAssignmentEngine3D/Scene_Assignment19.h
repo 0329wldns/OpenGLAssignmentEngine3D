@@ -18,7 +18,7 @@ public:
 
 private:
 	Vector3 cameraPos{};
-	Vector3 cemeraAt{};
+	Vector3 cameraAt{};
 	Vector3 cameraMoveDir{};
 	RotateData cameraRotate;
 	RotateData cameraOrbit;

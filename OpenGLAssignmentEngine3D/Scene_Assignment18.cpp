@@ -23,7 +23,6 @@ void Scene_Assignment18::update()
 
 void Scene_Assignment18::drawBG() const
 {
-	Scene::drawAxis();
 }
 
 void Scene_Assignment18::enter()

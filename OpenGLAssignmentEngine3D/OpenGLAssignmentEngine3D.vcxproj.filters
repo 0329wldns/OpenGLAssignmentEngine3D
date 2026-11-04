@@ -112,10 +112,16 @@
       <Filter>소스 파일\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Assignment18.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Assignment19.cpp">
+      <Filter>소스 파일\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Sphere18.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>소스 파일\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +210,12 @@
       <Filter>헤더 파일\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Sphere18.h">
+      <Filter>헤더 파일\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Assignment19.h">
+      <Filter>헤더 파일\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
       <Filter>헤더 파일\Objects</Filter>
     </ClInclude>
   </ItemGroup>
