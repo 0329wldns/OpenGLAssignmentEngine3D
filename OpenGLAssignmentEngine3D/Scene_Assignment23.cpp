@@ -5,9 +5,10 @@
 #include "MeshManager.h"
 #include "ShaderManager.h"
 #include "TimeManager.h"
+#include "Robot.h"
 
 Scene_Assignment23::Scene_Assignment23()
-	: openTrigger(false)
+	: openTrigger(true)
 {
 	for (int i = 0; i < 6; ++i)
 	{
@@ -19,6 +20,21 @@ Scene_Assignment23::Scene_Assignment23()
 void Scene_Assignment23::processKeyInput()
 {
 	if (KeyManager::getInstance().getKeyState(KEY::O) == KEY_STATE::TAP) openTrigger = true;
+
+	const KeyManager& keyManager{ KeyManager::getInstance() };
+
+	if (keyManager.getKeyState(KEY::UP) == KEY_STATE::TAP) cameraMoveDir.z -= 1.0f;
+	else if (keyManager.getKeyState(KEY::UP) == KEY_STATE::AWAY) cameraMoveDir.z += 1.0f;
+	if (keyManager.getKeyState(KEY::DOWN) == KEY_STATE::TAP) cameraMoveDir.z += 1.0f;
+	else if (keyManager.getKeyState(KEY::DOWN) == KEY_STATE::AWAY) cameraMoveDir.z -= 1.0f;
+	if (keyManager.getKeyState(KEY::LEFT) == KEY_STATE::TAP) cameraMoveDir.x -= 1.0f;
+	else if (keyManager.getKeyState(KEY::LEFT) == KEY_STATE::AWAY) cameraMoveDir.x += 1.0f;
+	if (keyManager.getKeyState(KEY::RIGHT) == KEY_STATE::TAP) cameraMoveDir.x += 1.0f;
+	else if (keyManager.getKeyState(KEY::RIGHT) == KEY_STATE::AWAY) cameraMoveDir.x -= 1.0f;
+	if (keyManager.getKeyState(KEY::MINUS) == KEY_STATE::TAP) cameraMoveDir.y -= 1.0f;
+	else if (keyManager.getKeyState(KEY::MINUS) == KEY_STATE::AWAY) cameraMoveDir.y += 1.0f;
+	if (keyManager.getKeyState(KEY::EQUAL) == KEY_STATE::TAP) cameraMoveDir.y += 1.0f;
+	else if (keyManager.getKeyState(KEY::EQUAL) == KEY_STATE::AWAY) cameraMoveDir.y -= 1.0f;
 
 	if (KeyManager::getInstance().getKeyState(KEY::ESC) == KEY_STATE::TAP) changeScene(SCENE_TYPE::START);
 }
@@ -38,6 +54,16 @@ void Scene_Assignment23::update()
 			openTrigger = false;
 		}
 	}
+
+	cameraPos += cameraMoveDir * 300.0f * dt;
+
+	glm::mat4 view{
+		glm::lookAt(cameraPos
+		, glm::vec3(0.0f, 400.0f, 0.0f)
+		, glm::vec3(0.0f, 1.0f, 0.0f))
+	};
+	ShaderManager::getInstance().useProgram("default");
+	ShaderManager::getInstance().setMat4("default", "view", view);
 }
 
 void Scene_Assignment23::drawBG() const
@@ -46,9 +72,13 @@ void Scene_Assignment23::drawBG() const
 
 	MeshData cubeMesh{ MeshManager::getInstance().getMeshData("cube") };
 	glBindVertexArray(cubeMesh.VAO);
+
+	glm::mat4 defaultModel{ 1.0f };
+	defaultModel = glm::translate(defaultModel, Vector3(0.0f, 400.0f, 0.0f));
+
 	for (int i = 0; i < 6; ++i)
 	{
-		glm::mat4 model{ 1.0f };
+		glm::mat4 model{ defaultModel };
 		model = glm::scale(model, faceData[i].scale);
 
 		ShaderManager::getInstance().setMat4("default", "model", model);
@@ -60,9 +90,12 @@ void Scene_Assignment23::drawBG() const
 
 void Scene_Assignment23::enter()
 {
+	Robot* robot{ new Robot };
+	createObject(robot, OBJECT_GROUP::POLYHENDRON);
+
 	glm::mat4 view{
-		glm::lookAt(glm::vec3(0.0f, 500.0f, 2000.0f)
-		, glm::vec3(0.0f, 0.0f, 0.0f)
+		glm::lookAt(cameraPos
+		, glm::vec3(0.0f, 400.0f, 0.0f)
 		, glm::vec3(0.0f, 1.0f, 0.0f))
 	};
 	ShaderManager::getInstance().useProgram("default");
@@ -73,9 +106,6 @@ void Scene_Assignment23::enter()
 	glm::mat4 perspective{ glm::perspective(glm::radians(45.0f), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 4800.0f) };
 	ShaderManager::getInstance().useProgram("default");
 	ShaderManager::getInstance().setMat4("default", "perspective", perspective);
-
-	// glCullFace(GL_FRONT);
-	// glEnable(GL_CULL_FACE);
 }
 
 void Scene_Assignment23::exit()

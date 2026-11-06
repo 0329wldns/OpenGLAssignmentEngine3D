@@ -20,4 +20,7 @@ public:
 private:
 	FaceData faceData[6];
 	bool openTrigger;
+
+	Vector3 cameraMoveDir{};
+	Vector3 cameraPos{ 0.0f, 900.0f, 2000.0f };
 };

@@ -158,6 +158,7 @@
     <ClCompile Include="Pyramid13.cpp" />
     <ClCompile Include="Pyramid14.cpp" />
     <ClCompile Include="Pyramid15.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene_Assignment13.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Pyramid14.h" />
     <ClInclude Include="Pyramid15.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Robot.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene_Assignment13.h" />

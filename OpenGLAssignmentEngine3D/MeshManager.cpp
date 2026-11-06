@@ -91,7 +91,8 @@ void MeshManager::init()
 	const float radius{ 1.0f };
 	circlrVertices.reserve(segmentCount);
 
-	for (int i{}; i < segmentCount; ++i)
+	circlrVertices.push_back(std::array<float, 6>{0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f});
+	for (int i{}; i < segmentCount - 1; ++i)
 	{
 		float theta{ 2.0f * glm::pi<float>() * static_cast<float>(i) / static_cast<float>(segmentCount) };
 		float x{ radius * std::cos(theta) };
